@@ -1,7 +1,8 @@
 on:
   push:
-    tags: 
-      - v*.*.*
+   branches: master
+   # tags: 
+   #   - v*.*.*
 jobs:
   test:
     runs-on: ubuntu-latest
