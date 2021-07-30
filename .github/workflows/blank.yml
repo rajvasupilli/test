@@ -17,6 +17,8 @@ jobs:
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
       - name: Semantic Release
+        env: 
+          GITHUB_TOKEN: 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
         uses: cycjimmy/semantic-release-action@v2
         with:
           extra_plugins: |
