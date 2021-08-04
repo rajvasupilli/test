@@ -5,15 +5,14 @@ on:
       - master      
 jobs:
   build:
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest    
     steps:
       - uses: actions/checkout@master
       - id: next_version
         uses: zwaldowski/semver-release-action@v1
         with:
          dry_run: true
-         bump: major
+         bump: minor
          github_token: ${{ secrets.GITHUB_TOKEN }}
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
