@@ -15,6 +15,7 @@ jobs:
             major
             minor
             patch
+          match: minor
         
       - uses: zwaldowski/semver-release-action@v1
         with:
