@@ -19,7 +19,7 @@ jobs:
          git add .
          git commit -m "Bump version"
          git push
-         echo ::set-output name=sha::$(git rev-parse HEAD)
+     #echo ::set-output name=sha::$(git rev-parse HEAD)
       - uses: zwaldowski/semver-release-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
