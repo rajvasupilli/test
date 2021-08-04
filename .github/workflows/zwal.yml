@@ -16,6 +16,7 @@ jobs:
          dry_run: true
          bump: major
          github_token: ${{ secrets.GITHUB_TOKEN }}
+         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - run: echo "${{ steps.next_version.outputs.version }}"
       - run: |
          git add .
