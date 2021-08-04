@@ -4,5 +4,3 @@ re
 
 dg
 
-efeg
-e
