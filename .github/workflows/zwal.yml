@@ -7,7 +7,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 2
       - id: next_version
         uses: zwaldowski/semver-release-action@v1
         with:
