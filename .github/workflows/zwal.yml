@@ -20,6 +20,8 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       - run: echo "${{ steps.next_version.outputs.version }}"
       - run: |
+         git config --global user.email "raj.vasupilli@gmail.com"
+         git config --global user.name "Raju V"
          git add .
          git commit -m "Bump version"
          git push
