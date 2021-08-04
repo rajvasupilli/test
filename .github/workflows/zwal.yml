@@ -1,23 +1,26 @@
 name: Bump version
 on:
-  pull_request:
+  push:
     branches:
-      - master
-      
+      - master      
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - id: bump
-        uses: zwaldowski/match-label-action@v1
+      - id: next_version
+        uses: zwaldowski/semver-release-action@v1
         with:
-          allowed: > 
-            major
-            minor
-            patch
-        
+         dry_run: true
+         bump: ${{ … }}
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "${{ steps.next_version.outputs.version }}"
+      - run: |
+         git add .
+         git commit -m "Bump version"
+         git push
+         echo ::set-output name=sha::$(git rev-parse HEAD)
       - uses: zwaldowski/semver-release-action@v1
         with:
-          bump: ${{ steps.bump.outputs.match }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          sha: ${{ steps.git_commit.outputs.sha }}
