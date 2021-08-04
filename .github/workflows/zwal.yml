@@ -18,8 +18,3 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       - run: echo "${{ steps.next_version.outputs.version }}"
-
-      - uses: zwaldowski/semver-release-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          sha: ${{ steps.git_commit.outputs.sha }}
