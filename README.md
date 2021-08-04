@@ -4,5 +4,3 @@ re
 
 dg
 
-fgew
-efef
