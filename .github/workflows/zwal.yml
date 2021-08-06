@@ -1,34 +1,57 @@
-name: Bump version
+name: Test and release
+
+# Run the workflow when a Pull Request is opened or when changes are pushed to master
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - "v*.*.*"
-      
+ pull_request:
+ push:
+  branches: [ master ]
+
 jobs:
-  build:
-    runs-on: ubuntu-latest    
-    steps:
-      - uses: actions/checkout@master
-      - uses: paulhatch/semantic-version@v4.0.2
-        with:
-          # The prefix to use to identify tags
-          tag_prefix: "v"
-          # A string which, if present in a git commit, indicates that a change represents a
-          # major (breaking) change, supports regular expressions wrapped with '/'
-          major_pattern: "(MAJOR)"
-          # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
-          minor_pattern: "(MINOR)"
-          # A string to determine the format of the version output
-          format: "${major}.${minor}.${patch}-prerelease${increment}"
-          # Optional path to check for changes. If any changes are detected in the path the
-          # 'changed' output will true. Enter multiple paths separated by spaces.
-          #change_path: "src/my-service"
-          # Named version, will be used as suffix for name version tag
-          #namespace: project-b
-          # Indicate whether short tags like 'v1' should be supported. If false only full
-          # tags like 'v1.0.0' will be recognized.
-          short_tags: true
-          # If this is set to true, *every* commit will be treated as a new version.
-          bump_each_commit: false
+ test:
+  runs-on: ubuntu-latest
+  strategy:
+   matrix:
+    # Run the steps below with the following versions of Node.js
+    node-version: [8.x, 10.x, 12.x]
+  steps:
+  # Fetch the latest commit
+  - name: Checkout
+    uses: actions/checkout@v2
+
+  # Setup Node.js using the appropriate version
+  - name: Use Node.js ${{ matrix.node-version }}
+    uses: actions/setup-node@v1
+    with:
+     node-version: ${{ matrix.node-version }}
+
+  # Install package dependencies
+  - name: Install
+    run: npm ci
+
+  # Run tests
+  - name: Test
+    run: npm test
+
+ release:
+  # Only release on push to master
+  if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+  runs-on: ubuntu-latest
+  # Waits for test jobs for each Node.js version to complete
+  needs: [test]
+  steps:
+  - name: Checkout
+    uses: actions/checkout@v2
+
+  - name: Setup Node.js
+    uses: actions/setup-node@v1
+    with:
+     node-version: 12.x
+
+  - name: Install
+    run: npm ci
+
+  - name: Release
+    run: npx semantic-release
+    env:
+     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
