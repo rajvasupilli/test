@@ -39,7 +39,7 @@ jobs:
           NEW_VERSION=v1.3.6
           echo "Before the Change"
           cat oc-build.yaml
-          sed -i "s/tag = v1/tag = $NEW_VERSION/g" oc-build.yaml
+          sed -i "s/tag: v1/tag: $NEW_VERSION/g" oc-build.yaml
           echo "After the Change"
           cat oc-build.yaml
 
