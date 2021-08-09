@@ -1,6 +1,3 @@
-# test1
+This is just a test to find and replace a string using sed via dynamic variable
 
-re
-
-dg
-
+tag = v1
