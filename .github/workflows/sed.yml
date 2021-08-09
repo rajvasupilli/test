@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Relace the Tag
+      - name: Replace the Tag in README.md
         run: |
           NEW_VERSION=v1.3.6
           echo "Before the Change"
@@ -34,5 +34,13 @@ jobs:
           sed -i "s/tag = v1/tag = $NEW_VERSION/g" README.md
           echo "After the Change"
           cat README.md
+      - name: Replace the Tag oc-build.yaml
+        run: |
+          NEW_VERSION=v1.3.6
+          echo "Before the Change"
+          cat oc-build.yaml
+          sed -i "s/tag = v1/tag = $NEW_VERSION/g" oc-build.yaml
+          echo "After the Change"
+          cat oc-build.yaml
 
 
