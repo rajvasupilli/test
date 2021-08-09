@@ -29,7 +29,10 @@ jobs:
       - name: Relace the Tag
         run: |
           NEW_VERSION=v1.3.6
+          echo "Before the Change"
+          cat README.md
           sed -i "s/tag = v1/tag = $NEW_VERSION/g" README.md
+          echo "After the Change"
           cat README.md
 
 
