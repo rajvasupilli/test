@@ -28,7 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Relace the Tag
         run: |
-          NEW_VERSION: v1.3.6
+          NEW_VERSION=v1.3.6
           sed -i "s/tag = v1/tag = $NEW_VERSION/g" README.md
           cat README.md
 
